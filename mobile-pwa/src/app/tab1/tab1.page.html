@@ -7,10 +7,20 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
   <ion-text>
     <h1>Mapa de Calor de Incidência de Casos</h1>
   </ion-text>
-<!--   <app-explore-container name="Tab 1 page"></app-explore-container> -->
   <app-mapa-paraiba class="map-position"></app-mapa-paraiba>
+
+  <ion-text>
+    <h1 class="bold-text">Casos de Dengue</h1>
+  </ion-text>
+  <ion-card>
+    <ion-card-content>
+      <app-total-casos></app-total-casos>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Componente do gráfico de linha temporal -->
+  <app-grafico-linha-temporal></app-grafico-linha-temporal>
 </ion-content>

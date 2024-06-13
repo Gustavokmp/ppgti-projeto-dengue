@@ -1,0 +1,22 @@
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin-bottom: 16px;
+  
+    .card-header {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+  
+    .card-content {
+        canvas {
+          max-width: 100%; /* Garante que o gráfico não ultrapasse a largura do contêiner */
+          height: auto; /* Ajusta a altura automaticamente conforme necessário */
+            max-height: 300px;
+        }
+      }
+  }
+  
