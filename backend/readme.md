@@ -140,3 +140,119 @@ http://localhost:5000/api/scatter-temp-humidity-cases?start_date=2024-01-01&end_
 - `200 OK`: Retorna um JSON com dados de temperatura, umidade e casos para o gráfico de dispersão.
 - `400 Bad Request`: Parâmetros obrigatórios ausentes.
 - `500 Internal Server Error`: Erro ao processar a requisição.
+
+
+
+ ### `/api/alerts` (POST)
+
+**Parâmetros do Corpo da Requisição:**
+
+- `email` (obrigatório): Email do usuário.
+- `startDate` (obrigatório): Data de início do alerta no formato YYYY-MM-DD.
+- `endDate` (obrigatório): Data de término do alerta no formato YYYY-MM-DD.
+- `geocode` (obrigatório): Código geográfico da cidade.
+- `minCases` (obrigatório): Número mínimo de casos para acionar o alerta.
+Exemplo de Corpo da Requisição:
+
+```
+{
+    "email": "user@example.com",
+    "startDate": "2024-06-24",
+    "endDate": "2024-08-24",
+    "geocode": "123456",
+    "minCases": 8
+}
+```
+**Respostas:**
+
+- `200` OK: Retorna um JSON com o ID do alerta criado.
+- `400` Bad Request: Parâmetros obrigatórios ausentes ou inválidos.
+- `500` Internal Server Error: Erro ao processar a requisição.
+
+ ### `/api/alerts` (GET)
+Listar Alertas
+
+**Parâmetros da URL:**
+
+- `email` (obrigatório): Email do usuário.
+- `Exemplo` de Requisição:
+
+```
+http://localhost:5000/api/alerts?email=user@example.com
+```
+**Respostas:**
+- `200` OK: Retorna um JSON com uma lista de alertas do usuário.
+- `404` Not Found: Nenhum alerta encontrado para o email fornecido.
+- `500` Internal Server Error: Erro ao processar a requisição.
+
+
+ ### `/api/alerts/<alert_id>` (GET)
+Buscar Alerta por ID
+
+**Parâmetros da URL:**
+
+- `alert_id` (obrigatório): ID do alerta.
+
+**Exemplo de Requisição:**
+```
+http://localhost:5000/api/alerts/6679ebd7c03b72be964533b5
+```
+
+**Respostas:**
+
+- `200` OK: Retorna um JSON com os dados do alerta.
+- `404` Not Found: Alerta não encontrado para o ID fornecido.
+- `500` Internal Server Error: Erro ao processar a requisição.
+ 
+
+### `/api/alerts/<alert_id>` (PUT)
+Atualizar Alerta por ID
+
+**Parâmetros da URL:**
+
+- `alert_id` (obrigatório): ID do alerta.
+
+**Parâmetros do Corpo da Requisição:**
+
+- `email` (opcional): Email do usuário.
+- `startDate` (opcional): Data de início do alerta no formato YYYY-MM-DD.
+- `endDate` (opcional): Data de término do alerta no formato YYYY-MM-DD.
+- `geocode` (opcional): Código geográfico da cidade.
+- `minCases` (opcional): Número mínimo de casos para acionar o alerta.
+
+**Exemplo de Corpo da Requisição:**
+
+```
+{
+    "email": "user@example.com",
+    "startDate": "2024-06-24",
+    "endDate": "2024-08-24",
+    "geocode": "123456",
+    "minCases": 10
+}
+```
+**Respostas:**
+
+- `200` OK: Retorna um JSON com os dados do alerta atualizado.
+- `400` Bad Request: Parâmetros inválidos.
+- `404` Not Found: Alerta não encontrado para o ID fornecido.
+- `500` Internal Server Error: Erro ao processar a requisição.
+
+### `/api/alerts/<alert_id>` (DELETE)
+Atualizar Alerta por ID
+
+**Parâmetros da URL:**
+
+- `alert_id` (obrigatório): ID do alerta.
+
+Exemplo de Requisição:
+
+```
+http://localhost:5000/api/alerts/6679ebd7c03b72be964533b5
+```
+
+**Respostas:**
+
+- `200` OK: Retorna uma mensagem confirmando a exclusão do alerta.
+- `404` Not Found: Alerta não encontrado para o ID fornecido.
+- `500` Internal Server Error: Erro ao processar a requisição.

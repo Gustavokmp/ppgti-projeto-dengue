@@ -2,10 +2,12 @@
 from flask import Blueprint, jsonify, request
 from app.apiDengue import fetch_and_store_data
 from app.database_queries import query_total_cases, query_cases_by_city,query_cases_by_month, query_scatter_temp_humidity_cases
-from app import db
+from app.alert import Alert
+
 
 bp = Blueprint('routes', __name__)
 
+# Rota para atualizar a base de dados
 @bp.route('/data', methods=['GET'])
 def get_data():
     # Recuperar parâmetros da URL
@@ -23,7 +25,7 @@ def get_data():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
+# Rota para pega quantidade total de casos
 @bp.route('/api/total-cases', methods=['GET'])
 def get_total_cases():
     start_date = request.args.get('start_date')
@@ -32,15 +34,16 @@ def get_total_cases():
     if not all([start_date, end_date]):
         return jsonify({"error": "Missing required parameters"}), 400
     
-    total_cases = query_total_cases(start_date,end_date)
+    total_cases = query_total_cases(start_date, end_date)
     
-    if total_cases.alive:  # Verifica se há resultados
+    if total_cases.alive: 
         result = total_cases.next()
     else:
-        result = {"total_cases": 0}
+        result = {"totalCases": 0}
     
     return jsonify(result)
 
+# Rota para quantidade de casos por cidade
 @bp.route('/api/cases-by-city', methods=['GET'])
 def get_cases_by_city():
     start_date = request.args.get('start_date')
@@ -49,11 +52,12 @@ def get_cases_by_city():
     if not all([start_date, end_date]):
         return jsonify({"error": "Missing required parameters"}), 400
     
-    cases_by_city = query_cases_by_city(start_date,end_date)
+    cases_by_city = query_cases_by_city(start_date, end_date)
     
-    result = [{"geocode": case["_id"], "city_name": case["city_name"], "total_cases": case["total_cases"]} for case in cases_by_city]
+    result = [{"geocode": case["_id"], "cityName": case["cityName"], "totalCases": case["totalCases"]} for case in cases_by_city]
     return jsonify(result)
 
+# Rota para o grafico de linha com visualizacao por mes
 @bp.route('/api/cases-by-month', methods=['GET'])
 def get_cases_by_month():
     start_date = request.args.get('start_date')
@@ -62,11 +66,12 @@ def get_cases_by_month():
     if not all([start_date, end_date]):
         return jsonify({"error": "Missing required parameters"}), 400
     
-    cases_by_month = query_cases_by_month(start_date,end_date)
+    cases_by_month = query_cases_by_month(start_date, end_date)
     
-    result = [{"year": int(case["_id"][:4]), "month": int(case["_id"][5:7]), "total_cases": case["total_casos"]} for case in cases_by_month]
+    result = [{"year": int(case["_id"][:4]), "month": int(case["_id"][5:7]), "totalCases": case["cases"]} for case in cases_by_month]
     return jsonify(result)
 
+# Rota para Coletar dados para o grafico de dispersao
 @bp.route('/api/scatter-temp-humidity-cases', methods=['GET'])
 def get_scatter_temp_humidity_cases():
     start_date = request.args.get('start_date')
@@ -75,7 +80,40 @@ def get_scatter_temp_humidity_cases():
     if not all([start_date, end_date]):
         return jsonify({"error": "Missing required parameters"}), 400
       
-    data = query_scatter_temp_humidity_cases(start_date,end_date)
+    data = query_scatter_temp_humidity_cases(start_date, end_date)
 
-    scatter_data = [{"temperatura": d["_id"]["temperatura"], "umidade": d["_id"]["umidade"], "casos": d["casos"]} for d in data]
+    scatter_data = [{"temperature": d["temperature"], "humidity": d["humidity"], "cases": d["cases"]} for d in data]
     return jsonify(scatter_data)
+
+# Rota para criar um alerta
+@bp.route('/api/alerts', methods=['POST'])
+def create_alert():
+    alert_data = request.get_json()
+    response, status_code = Alert.create_alert(alert_data)
+    return response, status_code
+
+# Rota para buscar um alerta por ID
+@bp.route('/api/alerts/<alert_id>', methods=['GET'])
+def get_alert_by_id(alert_id):
+    response, status_code = Alert.get_alert_by_id(alert_id)
+    return response, status_code
+
+# Rota para atualizar um alerta por ID
+@bp.route('/api/alerts/<alert_id>', methods=['PUT'])
+def update_alert(alert_id):
+    alert_data = request.get_json()
+    response, status_code = Alert.update_alert(alert_id, alert_data)
+    return response, status_code
+
+# Rota para excluir um alerta por ID
+@bp.route('/api/alerts/<alert_id>', methods=['DELETE'])
+def delete_alert(alert_id):
+    response, status_code = Alert.delete_alert(alert_id)
+    return response, status_code
+
+# Rota para listar alertas por email do usuário
+@bp.route('/api/alerts', methods=['GET'])
+def list_alerts():
+    email = request.args.get('email')
+    response, status_code = Alert.list_alerts(email)
+    return response, status_code
