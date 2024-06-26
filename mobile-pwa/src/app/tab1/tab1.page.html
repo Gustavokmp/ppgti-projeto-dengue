@@ -7,19 +7,17 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <div class="mt-1"></div>
+  <app-total-casos  [total_cases]="totalCases"></app-total-casos>
+
   <ion-text>
     <h1>Mapa de Calor de Incidência de Casos</h1>
   </ion-text>
-  <app-mapa-paraiba class="map-position"></app-mapa-paraiba>
+  <app-mapa-paraiba *ngIf="listCasesByCity" [listCases]="listCasesByCity" class="map-position"></app-mapa-paraiba>
 
   <ion-text>
     <h1 class="bold-text">Casos de Dengue</h1>
   </ion-text>
-  <ion-card>
-    <ion-card-content>
-      <app-total-casos></app-total-casos>
-    </ion-card-content>
-  </ion-card>
 
   <!-- Componente do gráfico de linha temporal -->
   <app-grafico-linha-temporal></app-grafico-linha-temporal>

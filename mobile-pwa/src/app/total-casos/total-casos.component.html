@@ -3,8 +3,6 @@
     <h2 class="bold-text">Total de Casos na {{ nome }}</h2>
   </div>
   <div class="card-content">
-    <p *ngIf="loading">Carregando total de casos...</p>
-    <p *ngIf="!loading && total_cases !== undefined">Total de Casos: {{ total_cases }}</p>
-    <p *ngIf="error">{{ error }}</p>
+    <p *ngIf="total_cases">{{ total_cases }}</p>
   </div>
 </div>

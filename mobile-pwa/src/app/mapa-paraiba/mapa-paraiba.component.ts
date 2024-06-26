@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { tileLayer, geoJSON, Map, GeoJSON, Layer } from 'leaflet';
+import { Component, Input, OnInit } from '@angular/core';
+import { tileLayer, geoJSON, Map, Layer } from 'leaflet';
 import paraibaMunicipios from '../../assets/data/geojs-25-mun.json';
 import 'leaflet.heat';
 
@@ -8,13 +8,14 @@ import 'leaflet.heat';
   templateUrl: './mapa-paraiba.component.html',
   styleUrls: ['./mapa-paraiba.component.scss'],
 })
-export class MapaParaibaComponent  implements OnInit {
+export class MapaParaibaComponent implements OnInit {
 
   options: any;
   layers: Layer[];
   map: Map;
   isDisplayMap = true;
   heatmapLayer: any;
+  @Input() listCases: Array<any>;
 
   ngOnInit() {
     this.resetDoomMap();
@@ -34,10 +35,10 @@ export class MapaParaibaComponent  implements OnInit {
             mouseout: (e) => this.resetHighlight(e),
             click: (e) => this.zoomToFeature(e)
           });
-          layer.bindPopup(`<p>${feature.properties.name}: ${10} casos de dengue</p>`);
+          layer.bindPopup(`<p>${feature.properties.name}: ${this.getCasesByCity(feature.properties.id)} casos de dengue</p>`);
         }
       })
-    ];    
+    ];
     this.heatmapLayer = this.createHeatmapLayer();
     this.layers.push(this.heatmapLayer);
   }
@@ -81,20 +82,23 @@ export class MapaParaibaComponent  implements OnInit {
 
   createHeatmapLayer() {
     const heatmapData = this.generateHeatmapData((paraibaMunicipios as any).features);
-    return (window as any).L.heatLayer(heatmapData, { radius: 10, blur: 15,
-      maxZoom: 9});
+    return (window as any).L.heatLayer(heatmapData, {
+      radius: 10, blur: 15,
+      maxZoom: 9
+    });
   }
 
   generateHeatmapData(geojson: any) {
     const heatmapData = [];
+    
     geojson.forEach((feature: any) => {
       const coordinates = feature.geometry.coordinates[0];
-      const dengueCases = this.randomIntFromInterval(1,50);
+      const dengueCases = this.getCasesByCity(feature.properties.id);
       const centroid = this.calculateCentroid(coordinates);
       heatmapData.push([centroid[1], centroid[0], dengueCases]);
-    });    
+    });
     return heatmapData;
-  } 
+  }
 
   calculateCentroid(coordinates: any[]) {
     let x = 0, y = 0, n = coordinates.length;
@@ -105,8 +109,7 @@ export class MapaParaibaComponent  implements OnInit {
     return [x / n, y / n];
   }
 
-  randomIntFromInterval(min, max) { // min and max included 
-    return Math.floor(Math.random() * (max - min + 1) + min);
+  getCasesByCity(id) {
+    return this.listCases.filter((item) => item.geocode == id)[0].totalCases;
   }
-
 }

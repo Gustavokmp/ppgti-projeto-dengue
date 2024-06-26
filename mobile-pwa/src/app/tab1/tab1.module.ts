@@ -3,7 +3,6 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { MapaParaibaComponentModule } from '../mapa-paraiba/mapa-paraiba.module';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
@@ -16,7 +15,6 @@ import { GraficoLinhaTemporalModule } from '../grafico-linha-temporal/grafico-li
     IonicModule,
     CommonModule,
     FormsModule,
-    ExploreContainerComponentModule,
     MapaParaibaComponentModule,
     LeafletModule,
     Tab1PageRoutingModule,
