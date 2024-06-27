@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:4.4
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongodb/dump:/dump
+    command: ["mongod", "--bind_ip_all"]
+    networks:
+      - app-network
+    restart: always
+
+  mongo-seed:
+    image: mongo:4.4
+    depends_on:
+      - mongodb
+    volumes:
+      - ./DB/dump/dengue_db:/dump
+    entrypoint: ["sh", "-c", "mongorestore --host mongodb --db dengue_db --drop /dump"]
+    networks:
+      - app-network
+
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=app
+      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_ENV=development
+      - MONGO_URI=mongodb://mongodb:27017/dengue_db
+    volumes:
+      - ./backend:/app
+    networks:
+      - app-network
+    depends_on:
+      - mongodb
+    restart: always
+
+  frontend:
+    build: ./mobile-pwa
+    container_name: frontend
+    ports:
+      - "80:8100"
+    volumes:
+      - ./mobile-pwa:/app
+    environment:
+      - NODE_ENV=development
+    networks:
+      - app-network
+    depends_on:
+      - backend
+    restart: always
+
+networks:
+  app-network:
+    driver: bridge

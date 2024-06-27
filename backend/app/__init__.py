@@ -16,3 +16,11 @@ app.register_blueprint(routes_bp)
 
 from app.scheduler import start_scheduler
 start_scheduler(app)
+
+# Adding CORS headers to every response
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    return response
