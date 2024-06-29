@@ -3,6 +3,7 @@ import pandas as pd
 from app import db
 from config import Config
 from app.city_geocodes import city_geocodes
+from app.database_queries import get_duplicate_records
 import datetime
 
 
@@ -32,7 +33,8 @@ def fetch_and_store_data(ew_start, ew_end, ey_start, ey_end):
                     data.get("data_iniSE", "") + 7 * 24 * 60 * 60 * 1000)
 
                 # Organizar os dados conforme o formato desejado
-                organized_data = transform_data(geocode,city_name,start_date,end_date,data)
+                organized_data = transform_data(
+                    geocode, city_name, start_date, end_date, data)
 
                 # Critério de busca para verificação de existência
                 search_criteria = {
@@ -49,6 +51,7 @@ def fetch_and_store_data(ew_start, ew_end, ey_start, ey_end):
                 )
         else:
             print(f"Unexpected JSON format for geocode {geocode}: {data_list}")
+        remove_duplicate_records()
 
 
 def timestamp_to_date(timestamp):
@@ -73,3 +76,14 @@ def transform_data(geocode, city_name, start_date, end_date, data):
             "maxAirHum": data.get("umidmax", "")
         }
     }
+
+
+def remove_duplicate_records():
+    # Passo 1: Identificar duplicatas
+    duplicates = get_duplicate_records()
+    # Passo 2: Excluir duplicatas, mantendo o primeiro documento encontrado
+    for doc in duplicates:
+        # Remove o primeiro ID (para manter um único documento)
+        doc['docs'].pop(0)
+        # Exclui os documentos restantes
+        db.dengue_data.delete_many({'_id': {'$in': doc['docs']}})
