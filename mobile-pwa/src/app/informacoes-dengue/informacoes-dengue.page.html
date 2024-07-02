@@ -1,0 +1,242 @@
+
+
+<ion-content class="ion-padding">
+  <!-- Card de Prevenção da Dengue -->
+  <ion-card>
+    <ion-card-header (click)="togglePrevencao()" [class.expanded]="mostrarPrevencao">
+      <ion-card-title>Prevenção da Dengue</ion-card-title>
+      <ion-icon slot="end" name="chevron-down-outline" *ngIf="!mostrarPrevencao"></ion-icon>
+      <ion-icon slot="end" name="chevron-up-outline" *ngIf="mostrarPrevencao"></ion-icon>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="mostrarPrevencao">
+      <p>
+        A dengue é uma doença viral transmitida pelo mosquito Aedes aegypti. A prevenção é fundamental para evitar surtos da doença. Aqui estão algumas medidas importantes para prevenir a dengue:
+      </p>
+
+      <h4><strong>Eliminar Locais de Acúmulo de Água:</strong></h4>
+      <ul>
+        <li>Tampe caixas d'água, tonéis e barris.</li>
+        <li>Mantenha calhas sempre limpas.</li>
+        <li>Deixe garrafas sempre viradas com a boca para baixo.</li>
+        <li>Mantenha lixeiras bem tampadas.</li>
+        <li>Trate a água da piscina com cloro e limpe-a uma vez por semana.</li>
+        <li>Limpe ralos e canaletas externas.</li>
+        <li>Utilize telas de proteção em janelas e portas.</li>
+      </ul>
+
+      <h4><strong>Usar Repelentes:</strong></h4>
+      <ul>
+        <li>Aplique repelentes nas áreas expostas do corpo e sobre a roupa, seguindo sempre as instruções do fabricante.</li>
+        <li>Prefira roupas de mangas longas e calças compridas, principalmente durante os horários de maior atividade do mosquito (início da manhã e final da tarde).</li>
+      </ul>
+
+      <h4><strong>Adotar Medidas Comunitárias:</strong></h4>
+      <ul>
+        <li>Participe de campanhas de conscientização sobre a importância da prevenção.</li>
+        <li>Incentive sua comunidade a realizar mutirões de limpeza para eliminar criadouros de mosquitos.</li>
+        <li>Notifique a prefeitura sobre áreas com possíveis focos de Aedes aegypti.</li>
+      </ul>
+
+      <h4><strong>Proteção Individual e Coletiva:</strong></h4>
+      <ul>
+        <li>Use mosquiteiros em camas e berços, especialmente para proteger crianças e pessoas vulneráveis.</li>
+        <li>Instale telas de proteção em janelas e portas.</li>
+        <li>Utilize inseticidas e larvicidas recomendados pelos órgãos de saúde.</li>
+      </ul>
+
+      <!-- Botão para fechar o card -->
+      <ion-button expand="block" (click)="togglePrevencao()">Fechar Prevenção da Dengue</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Card de Tratamento da Dengue -->
+  <ion-card>
+    <ion-card-header (click)="toggleTratamento()" [class.expanded]="mostrarTratamento">
+      <ion-card-title>Tratamento da Dengue</ion-card-title>
+      <ion-icon slot="end" name="chevron-down-outline" *ngIf="!mostrarTratamento"></ion-icon>
+      <ion-icon slot="end" name="chevron-up-outline" *ngIf="mostrarTratamento"></ion-icon>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="mostrarTratamento">
+      <p>
+        Se a prevenção falhar e uma pessoa for infectada pelo vírus da dengue, o tratamento é essencial para evitar complicações graves. Aqui estão algumas medidas para o tratamento da dengue:
+      </p>
+
+      <h4><strong>Hidratação:</strong></h4>
+      <ul>
+        <li>Beber bastante líquido (água, sucos naturais e água de coco) para evitar a desidratação.</li>
+        <li>Em casos mais graves, a hidratação intravenosa pode ser necessária.</li>
+      </ul>
+
+      <h4><strong>Controle da Febre e da Dor:</strong></h4>
+      <ul>
+        <li>Usar medicamentos prescritos pelo médico, como paracetamol, para controlar a febre e aliviar a dor. Evite medicamentos que contenham ácido acetilsalicílico (aspirina) e anti-inflamatórios não esteroides (como ibuprofeno), pois podem aumentar o risco de sangramentos.</li>
+      </ul>
+
+      <h4><strong>Repouso:</strong></h4>
+      <ul>
+        <li>O repouso é fundamental para a recuperação do paciente.</li>
+      </ul>
+
+      <h4><strong>Acompanhamento Médico:</strong></h4>
+      <ul>
+        <li>Monitorar regularmente a evolução dos sintomas com um médico, principalmente nos primeiros dias da doença.</li>
+        <li>Em casos de sintomas graves como sangramentos, dor abdominal intensa, vômitos persistentes, tontura ou dificuldade para respirar, procure imediatamente atendimento médico de emergência.</li>
+      </ul>
+
+      <h4><strong>Cuidados Específicos:</strong></h4>
+      <ul>
+        <li>Em casos graves de dengue hemorrágica ou síndrome do choque da dengue, a internação hospitalar é necessária para um tratamento intensivo.</li>
+      </ul>
+
+      <!-- Botão para fechar o card -->
+      <ion-button expand="block" (click)="toggleTratamento()">Fechar Tratamento da Dengue</ion-button>
+    </ion-card-content>
+  </ion-card>
+  <!-- Card: Sintomas da Dengue -->
+  <ion-card>
+    <ion-card-header (click)="toggleSintomas()">
+      <ion-card-title>
+        Sintomas da Dengue
+        <ion-icon slot="end" name="chevron-down-outline" *ngIf="!mostrarSintomas"></ion-icon>
+        <ion-icon slot="end" name="chevron-up-outline" *ngIf="mostrarSintomas"></ion-icon>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="mostrarSintomas">
+    
+      <!-- Card: Sintomas da Dengue -->
+        <ion-card-content>
+          <div class="sintomas-intro">
+            <p class="intro-text">
+              Os sintomas da dengue podem variar de leves a graves. É crucial estar atento aos sinais da doença para buscar tratamento adequado. Aqui estão os principais sintomas:
+            </p>
+          </div>
+          <!-- Card: Febre Alta -->
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Febre Alta</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>Um dos sintomas iniciais da dengue é a febre alta, muitas vezes acompanhada de calafrios.</p>
+            </ion-card-content>
+          </ion-card>
+    
+          <!-- Card: Dor no Corpo e nas Articulações -->
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Dor no Corpo e nas Articulações</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>Dores intensas no corpo e nas articulações são comuns durante a dengue, afetando principalmente costas, braços e pernas.</p>
+            </ion-card-content>
+          </ion-card>
+    
+          <!-- Card: Dor Atrás dos Olhos -->
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Dor Atrás dos Olhos</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>A sensação de dor atrás dos olhos é um sintoma característico da dengue, especialmente durante o movimento dos olhos.</p>
+            </ion-card-content>
+          </ion-card>
+    
+          <!-- Card: Mal-estar -->
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Mal-estar</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>O mal-estar geral, como sensação de cansaço e fraqueza, é frequentemente relatado pelos pacientes com dengue.</p>
+            </ion-card-content>
+          </ion-card>
+    
+          <!-- Card: Dor de Cabeça -->
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Dor de Cabeça</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>Dores de cabeça intensas são sintomas comuns durante a dengue, afetando a região frontal principalmente.</p>
+            </ion-card-content>
+          </ion-card>
+    
+          <!-- Card: Manchas Vermelhas no Corpo -->
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Manchas Vermelhas no Corpo</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>O aparecimento de manchas vermelhas na pele, conhecidas como exantema, pode ocorrer durante o curso da dengue.</p>
+            </ion-card-content>
+          </ion-card>
+    
+          <!-- Sinais de Alarme -->
+          <div class="sintomas-intro">
+            <p class="intro-text">
+              Sinais de Alarme da Dengue:
+            </p>
+          </div>
+    
+          <!-- Card: Dor Abdominal Intensa e Contínua -->
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Dor Abdominal Intensa e Contínua</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>A presença de dor abdominal intensa e persistente pode indicar sinais de alarme na dengue.</p>
+            </ion-card-content>
+          </ion-card>
+    
+          <!-- Card: Vômitos Persistentes -->
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Vômitos Persistentes</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>Os vômitos frequentes e persistentes são considerados sinais de alarme durante a dengue.</p>
+            </ion-card-content>
+          </ion-card>
+    
+          <!-- Card: Acúmulo de Líquidos -->
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Acúmulo de Líquidos</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>O acúmulo de líquidos no corpo pode ocorrer em casos graves de dengue.</p>
+            </ion-card-content>
+          </ion-card>
+    
+          <!-- Card: Sangramento de Mucosa -->
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Sangramento de Mucosa</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>O sangramento de mucosa, como gengivas e nariz, pode ser um sinal de alarme na dengue.</p>
+            </ion-card-content>
+          </ion-card>
+    
+          <!-- Card: Irritabilidade -->
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Irritabilidade</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>Irritabilidade excessiva e alterações de humor podem ser observadas em pacientes com dengue grave.</p>
+            </ion-card-content>
+          </ion-card>
+    
+          <!-- Botão para fechar -->
+          <ion-button expand="block" (click)="toggleSintomas()">Fechar Sintomas da Dengue</ion-button>
+        </ion-card-content>
+    
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Outros cards de Prevenção e Tratamento (se houver) -->
+
+</ion-content>

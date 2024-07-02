@@ -1,0 +1,29 @@
+ion-card {
+    margin: 10px;
+  }
+  
+  ion-card-title {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  ion-card-content {
+    font-size: 1em;
+  }
+  
+  .sinais-alarme {
+    font-size: 1.2rem; /* Tamanho de fonte maior para destacar o título */
+    font-weight: bold; /* Negrito para destacar */
+    margin-top: 20px; /* Espaçamento superior para separar dos cards abaixo */
+  }
+  .sintomas-intro {
+    background-color: #f0f0f0; /* Cor de fundo para destacar */
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .intro-text {
+    font-weight: bold;
+    font-size: 1.1em;
+  }
