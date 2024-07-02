@@ -12,11 +12,8 @@ export class GraficoLinhaTemporalComponent implements AfterViewInit {
 
   meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
   totalCases: number[] = Array(12).fill(0); // Inicializa um array com 12 zeros
-  currentYear: number;
 
-  constructor(private http: HttpClient) {
-    this.currentYear = new Date().getFullYear(); // Obtém o ano atual ao iniciar o componente
-  }
+  constructor(private http: HttpClient) {}
 
   ngAfterViewInit(): void {
     this.fetchDataAndCreateChart();
@@ -25,10 +22,10 @@ export class GraficoLinhaTemporalComponent implements AfterViewInit {
   fetchDataAndCreateChart(): void {
     const baseUrl = 'http://localhost:5000/api/total-cases';
 
-    // Fazendo requisições para cada mês do ano atual
+    // Fazendo requisições para cada mês
     for (let i = 0; i < 12; i++) {
-      const start_date = `${this.currentYear}-${(i + 1).toString().padStart(2, '0')}-01`;
-      const end_date = `${this.currentYear}-${(i + 1).toString().padStart(2, '0')}-31`;
+      const start_date = `2024-${(i + 1).toString().padStart(2, '0')}-01`;
+      const end_date = `2024-${(i + 1).toString().padStart(2, '0')}-31`;
 
       this.fetchTotalCases(baseUrl, start_date, end_date, i);
     }
