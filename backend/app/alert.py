@@ -4,7 +4,8 @@ from app import db
 
 
 class Alert:
-    def __init__(self, email, geocode, startDate, endDate, minCases):
+    def __init__(self, name, email, geocode, startDate, endDate, minCases):
+        self.name = name
         self.email = email
         self.geocode = geocode
         self.startDate = startDate
@@ -13,6 +14,7 @@ class Alert:
 
     def to_dict(self):
         return {
+            "name":self.name,
             "email": self.email,
             "geocode": self.geocode,
             "startDate": self.startDate,
@@ -66,6 +68,7 @@ class Alert:
         for alert in alerts:
             alert_data = {
                 "_id": str(alert["_id"]),
+                "name":alert["name"] ,
                 "email": alert["email"],
                 "geocode": alert["geocode"],
                 "startDate": alert["startDate"],

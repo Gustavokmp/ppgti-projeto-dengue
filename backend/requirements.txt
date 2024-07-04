@@ -4,3 +4,4 @@ pandas
 pymongo
 APScheduler
 flask-cors
+coverage
