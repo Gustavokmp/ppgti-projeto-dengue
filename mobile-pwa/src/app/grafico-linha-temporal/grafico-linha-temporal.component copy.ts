@@ -2,12 +2,6 @@ import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { HttpClient } from '@angular/common/http';
 
-interface MonthData {
-  month: number;
-  totalCases: number;
-  year: number;
-}
-
 @Component({
   selector: 'app-grafico-linha-temporal',
   templateUrl: './grafico-linha-temporal.component.html',
@@ -18,32 +12,37 @@ export class GraficoLinhaTemporalComponent implements AfterViewInit {
 
   meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
   totalCases: number[] = Array(12).fill(0); // Inicializa um array com 12 zeros
-  currentYear: number;
 
-  constructor(private http: HttpClient) {
-    this.currentYear = new Date().getFullYear(); // Obtém o ano atual ao iniciar o componente
-  }
+  constructor(private http: HttpClient) {}
 
   ngAfterViewInit(): void {
     this.fetchDataAndCreateChart();
   }
 
   fetchDataAndCreateChart(): void {
-    const baseUrl = 'http://localhost:5000/api/cases-by-month';
-    const start_date = `${this.currentYear}-01-01`;
-    const end_date = `${this.currentYear}-12-31`;
+    const baseUrl = 'http://localhost:5000/api/total-cases';
 
+    // Fazendo requisições para cada mês
+    for (let i = 0; i < 12; i++) {
+      const start_date = `2024-${(i + 1).toString().padStart(2, '0')}-01`;
+      const end_date = `2024-${(i + 1).toString().padStart(2, '0')}-31`;
+
+      this.fetchTotalCases(baseUrl, start_date, end_date, i);
+    }
+  }
+
+  fetchTotalCases(baseUrl: string, start_date: string, end_date: string, index: number): void {
     const url = `${baseUrl}?start_date=${start_date}&end_date=${end_date}`;
-    this.http.get<MonthData[]>(url).subscribe(
+
+    this.http.get<any>(url).subscribe(
       response => {
         console.log('Dados recebidos:', response);
-        response.forEach(monthData => {
-          this.totalCases[monthData.month - 1] = monthData.totalCases;
-        });
+        this.totalCases[index] = response.totalCases;
         this.createChart(); // Atualiza o gráfico após receber os dados
       },
       error => {
         console.error('Erro ao obter dados:', error);
+        this.totalCases[index] = 0; // Define como 0 caso haja um erro na requisição
         this.createChart(); // Atualiza o gráfico mesmo em caso de erro
       }
     );
