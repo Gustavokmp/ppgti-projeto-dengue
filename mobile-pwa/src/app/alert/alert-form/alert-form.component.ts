@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import paraibaMunicipios from '../../../assets/data/geojs-25-mun.json';
@@ -13,6 +13,8 @@ export class AlertFormComponent implements OnInit {
 
   alertForm: FormGroup;
   listCities = [];
+  @Input() alertObj;
+
   constructor(
     private modalCtrl: ModalController,
     private fb: FormBuilder,
@@ -25,6 +27,9 @@ export class AlertFormComponent implements OnInit {
   ngOnInit(): void {
     this.getListCities()
     this.createForm();
+    if (this.alertObj) {
+      this.setValueForm();
+    }
   }
 
 
@@ -36,8 +41,18 @@ export class AlertFormComponent implements OnInit {
       frequency: ['', [Validators.required]],
       minCases: [0, [Validators.required]]
     })
-
   }
+
+  setValueForm() {
+    this.alertForm.get('name').setValue(this.alertObj.name);
+    this.alertForm.get('email').setValue(this.alertObj.email);
+    this.alertForm.get('geocode').setValue(this.alertObj.geocode);
+    this.alertForm.get('frequency').setValue(this.alertObj.frequency);
+    this.alertForm.get('minCases').setValue(this.alertObj.minCases);
+    this.alertForm.get('name').disable();
+    this.alertForm.get('email').disable();
+  }
+
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
   }
@@ -45,18 +60,38 @@ export class AlertFormComponent implements OnInit {
   save() {
     if (this.alertForm.valid) {
       this.showLoading();
-      this.alertService.createAlert(this.alertForm.value).subscribe(() => {
-        this.closeLoading();
-        this.presentToast();
-        return this.modalCtrl.dismiss('confirm');
-      }, (error) => {
-        console.log(error);
-        this.closeLoading();
-        
-      })
+      if (this.alertObj) {
+        this.edit();
+      } else {
+        this.create();
+      }
+
     }
 
+  }
 
+
+  edit(){
+    this.alertService.updateAlert(this.alertObj._id,this.alertForm.value).subscribe(() => {
+      this.closeLoading();
+      this.presentToastEdit();
+      this.alertObj = undefined;
+      return this.modalCtrl.dismiss('confirm');
+    }, (error) => {
+      console.log(error);
+      this.closeLoading();
+    })
+  }
+
+  create(){
+    this.alertService.createAlert(this.alertForm.value).subscribe(() => {
+      this.closeLoading();
+      this.presentToastCreate();
+      return this.modalCtrl.dismiss('confirm');
+    }, (error) => {
+      console.log(error);
+      this.closeLoading();
+    })
   }
 
   getListCities() {
@@ -81,9 +116,19 @@ export class AlertFormComponent implements OnInit {
     this.loadingCtrl.dismiss();
   }
 
-  async presentToast() {
+  async presentToastCreate() {
     const toast = await this.toastController.create({
       message: 'Alerta criado com sucesso!!',
+      duration: 2500,
+      position: 'top',
+    });
+
+    await toast.present();
+  }
+
+  async presentToastEdit() {
+    const toast = await this.toastController.create({
+      message: 'Alerta atualizado com sucesso!!',
       duration: 2500,
       position: 'top',
     });

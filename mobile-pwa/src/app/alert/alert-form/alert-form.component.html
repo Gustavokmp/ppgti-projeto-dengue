@@ -3,7 +3,8 @@
     <ion-buttons slot="end">
       <ion-button color="medium" (click)="cancel()">Cancelar</ion-button>
     </ion-buttons>
-    <ion-title>Cadastrar Alerta</ion-title>
+    <ion-title *ngIf="!alertObj">Cadastrar Alerta</ion-title>
+    <ion-title  *ngIf="alertObj">Editar Alerta</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
@@ -16,7 +17,7 @@
   </ion-item>
 
   <ion-item>
-    <ion-input type="number" label="Quantidade minima de casos" formControlName="minCases"></ion-input>
+    <ion-input type="number" label="Qtd. min. de casos" formControlName="minCases"></ion-input>
   </ion-item>
   <ion-item>
     <ion-select label="Cidade" placeholder="Selecione a cidade" formControlName="geocode">

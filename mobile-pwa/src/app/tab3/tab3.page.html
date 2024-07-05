@@ -37,7 +37,7 @@
     </ion-card-header>
   
     <ion-card-content>
-     <app-alert-list [alerts]="listAlerts"></app-alert-list>
+     <app-alert-list [alerts]="listAlerts" (reloadList)="getAlertsByEmail()"></app-alert-list>
     </ion-card-content>
   </ion-card>
 

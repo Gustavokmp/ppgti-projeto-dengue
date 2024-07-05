@@ -35,11 +35,9 @@ export class Tab3Page {
     });
     modal.present();
 
-    const { data, role } = await modal.onWillDismiss();
-
-    if (role === 'confirm') {
-      console.log(`Hello, ${data}!`);
-
+    await modal.onWillDismiss();
+    if(this.email && this.listAlerts.length !== 0){
+      this.getAlertsByEmail();
     }
   }
 
