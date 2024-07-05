@@ -14,7 +14,7 @@ export class Tab1Page {
   endDate: string;
   listCasesByCity: Array<any>;
   listChartLine: Array<any>;
-
+  dataScatter: Array<any>;
   constructor(private dataService: DataService, private datePipe: DatePipe) { }
 
   ionViewWillEnter() {
@@ -22,6 +22,7 @@ export class Tab1Page {
     this.getTotalCases();
     this.getCasesByCity();
     this.getCasesByMonth();
+    this.getDataScatter();
   }
 
 
@@ -52,13 +53,24 @@ export class Tab1Page {
     })
   }
 
-  getCasesByMonth(){
+  getCasesByMonth() {
     this.dataService.getCasesByMonth(this.startDate, this.endDate).subscribe((data) => {
       this.listChartLine = data;
     }, (error) => {
       console.log(error);
       setTimeout(() => {
         this.getCasesByMonth();
+      }, 1000);
+    })
+  }
+
+  getDataScatter() {
+    this.dataService.getScatterTempHumidityCases(this.startDate, this.endDate).subscribe((data) => {
+      this.dataScatter = data;
+    }, (error) => {
+      console.log(error);
+      setTimeout(() => {
+        this.getDataScatter();
       }, 1000);
     })
   }

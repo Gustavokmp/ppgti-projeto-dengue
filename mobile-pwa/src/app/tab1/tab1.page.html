@@ -13,4 +13,6 @@
   <app-mapa-paraiba *ngIf="listCasesByCity" [listCases]="listCasesByCity" class="map-position"></app-mapa-paraiba>
   <div class="mt-1"></div>
   <app-grafico-linha-temporal *ngIf="listChartLine" [listData]="listChartLine"></app-grafico-linha-temporal>
+  <div class="mt-1"></div>
+  <app-grafico-dispersao *ngIf="dataScatter" [data]="dataScatter"></app-grafico-dispersao>
 </ion-content>

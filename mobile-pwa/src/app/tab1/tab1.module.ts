@@ -8,6 +8,7 @@ import { MapaParaibaComponentModule } from '../mapa-paraiba/mapa-paraiba.module'
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { TotalCasosModule } from '../total-casos/total-casos.module';
 import { GraficoLinhaTemporalModule } from '../grafico-linha-temporal/grafico-linha-temporal.module';
+import { GraficoDispersaoModule } from '../grafico-dispersao/grafico-dispersao.module';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { GraficoLinhaTemporalModule } from '../grafico-linha-temporal/grafico-li
     Tab1PageRoutingModule,
     TotalCasosModule,
     GraficoLinhaTemporalModule,
+    GraficoDispersaoModule
 
   ],
   declarations: [Tab1Page],
