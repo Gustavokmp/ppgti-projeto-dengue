@@ -13,6 +13,7 @@ export class Tab1Page {
   startDate: string;
   endDate: string;
   listCasesByCity: Array<any>;
+  listChartLine: Array<any>;
 
   constructor(private dataService: DataService, private datePipe: DatePipe) { }
 
@@ -20,6 +21,7 @@ export class Tab1Page {
     this.getCurrentDate();
     this.getTotalCases();
     this.getCasesByCity();
+    this.getCasesByMonth();
   }
 
 
@@ -46,6 +48,17 @@ export class Tab1Page {
       console.log(error);
       setTimeout(() => {
         this.getCasesByCity();
+      }, 1000);
+    })
+  }
+
+  getCasesByMonth(){
+    this.dataService.getCasesByMonth(this.startDate, this.endDate).subscribe((data) => {
+      this.listChartLine = data;
+    }, (error) => {
+      console.log(error);
+      setTimeout(() => {
+        this.getCasesByMonth();
       }, 1000);
     })
   }

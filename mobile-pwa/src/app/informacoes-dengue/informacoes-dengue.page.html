@@ -4,7 +4,7 @@
   <!-- Card de Prevenção da Dengue -->
   <ion-card>
     <ion-card-header (click)="togglePrevencao()" [class.expanded]="mostrarPrevencao">
-      <ion-card-title>Prevenção da Dengue</ion-card-title>
+      <ion-card-title>Prevenção</ion-card-title>
       <ion-icon slot="end" name="chevron-down-outline" *ngIf="!mostrarPrevencao"></ion-icon>
       <ion-icon slot="end" name="chevron-up-outline" *ngIf="mostrarPrevencao"></ion-icon>
     </ion-card-header>
@@ -53,7 +53,7 @@
   <!-- Card de Tratamento da Dengue -->
   <ion-card>
     <ion-card-header (click)="toggleTratamento()" [class.expanded]="mostrarTratamento">
-      <ion-card-title>Tratamento da Dengue</ion-card-title>
+      <ion-card-title>Tratamento</ion-card-title>
       <ion-icon slot="end" name="chevron-down-outline" *ngIf="!mostrarTratamento"></ion-icon>
       <ion-icon slot="end" name="chevron-up-outline" *ngIf="mostrarTratamento"></ion-icon>
     </ion-card-header>
@@ -98,7 +98,7 @@
   <ion-card>
     <ion-card-header (click)="toggleSintomas()">
       <ion-card-title>
-        Sintomas da Dengue
+        Sintomas
         <ion-icon slot="end" name="chevron-down-outline" *ngIf="!mostrarSintomas"></ion-icon>
         <ion-icon slot="end" name="chevron-up-outline" *ngIf="mostrarSintomas"></ion-icon>
       </ion-card-title>

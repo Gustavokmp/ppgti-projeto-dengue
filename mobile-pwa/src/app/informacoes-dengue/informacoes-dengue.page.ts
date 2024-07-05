@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./informacoes-dengue.page.scss'],
 })
 export class InformacoesDenguePage {
-  mostrarPrevencao: boolean = false;
+  mostrarPrevencao: boolean = true;
   mostrarTratamento: boolean = false;
   mostrarSintomas: boolean = false;
 

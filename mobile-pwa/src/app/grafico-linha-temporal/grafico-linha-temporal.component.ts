@@ -1,6 +1,5 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, Input } from '@angular/core';
 import Chart from 'chart.js/auto';
-import { HttpClient } from '@angular/common/http';
 
 interface MonthData {
   month: number;
@@ -17,36 +16,28 @@ export class GraficoLinhaTemporalComponent implements AfterViewInit {
   @ViewChild('meuGraficoLinha') meuGraficoLinha!: ElementRef<HTMLCanvasElement>;
 
   meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-  totalCases: number[] = Array(12).fill(0); // Inicializa um array com 12 zeros
-  currentYear: number;
+  totalCases: number[] = [];
 
-  constructor(private http: HttpClient) {
-    this.currentYear = new Date().getFullYear(); // Obtém o ano atual ao iniciar o componente
+  @Input()
+  listData: any;
+
+  listLabels: Array<string>;
+
+  constructor() {
   }
+
 
   ngAfterViewInit(): void {
-    this.fetchDataAndCreateChart();
+    this.initChart();
   }
 
-  fetchDataAndCreateChart(): void {
-    const baseUrl = 'http://localhost:5000/api/cases-by-month';
-    const start_date = `${this.currentYear}-01-01`;
-    const end_date = `${this.currentYear}-12-31`;
-
-    const url = `${baseUrl}?start_date=${start_date}&end_date=${end_date}`;
-    this.http.get<MonthData[]>(url).subscribe(
-      response => {
-        console.log('Dados recebidos:', response);
-        response.forEach(monthData => {
-          this.totalCases[monthData.month - 1] = monthData.totalCases;
-        });
-        this.createChart(); // Atualiza o gráfico após receber os dados
-      },
-      error => {
-        console.error('Erro ao obter dados:', error);
-        this.createChart(); // Atualiza o gráfico mesmo em caso de erro
-      }
-    );
+  initChart() {
+    this.listLabels = [];
+    this.listData.forEach(monthData => {
+      this.totalCases.push(monthData.totalCases);
+      this.listLabels.push(`${this.meses[monthData.month - 1]}/${monthData.year}`)
+    });
+    this.createChart(); // Atualiza o gráfico após receber os dados
   }
 
   createChart(): void {
@@ -65,7 +56,7 @@ export class GraficoLinhaTemporalComponent implements AfterViewInit {
       new Chart(ctx, {
         type: 'line',
         data: {
-          labels: this.meses,
+          labels: this.listLabels,
           datasets: [{
             label: 'Total de Casos por Mês',
             data: this.totalCases,
@@ -78,11 +69,16 @@ export class GraficoLinhaTemporalComponent implements AfterViewInit {
           }]
         },
         options: {
+          plugins: {
+            legend: {
+              onClick: null
+            }  
+          },
           scales: {
             y: {
               beginAtZero: true
             }
-          }
+          },
         }
       });
     }

@@ -9,12 +9,8 @@
 <ion-content [fullscreen]="true">
   <div class="mt-1"></div>
   <app-total-casos  [total_cases]="totalCases"></app-total-casos>
-
-  <ion-text>
-    <h1>Mapa de Calor de Incidência de Casos</h1>
-  </ion-text>
+  <div class="mt-1"></div>
   <app-mapa-paraiba *ngIf="listCasesByCity" [listCases]="listCasesByCity" class="map-position"></app-mapa-paraiba>
-
-  <!-- Componente do gráfico de linha temporal -->
-  <app-grafico-linha-temporal></app-grafico-linha-temporal>
+  <div class="mt-1"></div>
+  <app-grafico-linha-temporal *ngIf="listChartLine" [listData]="listChartLine"></app-grafico-linha-temporal>
 </ion-content>

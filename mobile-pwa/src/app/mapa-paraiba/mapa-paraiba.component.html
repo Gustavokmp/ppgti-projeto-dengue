@@ -1,9 +1,18 @@
-<div
- *ngIf="isDisplayMap"
- style="height: 300px;" 
- leaflet
-  [leafletOptions]="options" 
-  [leafletLayers]="layers"
-  (leafletMapReady)="onMapReady($event)">
-
+<div class="card">
+  <div class="card-header">
+    <h2 class="bold-text">Mapa de Calor de Incidência de Casos</h2>
+  </div>
+  <div class="card-content">
+    <div
+    *ngIf="isDisplayMap"
+    style="height: 300px;" 
+    leaflet
+     [leafletOptions]="options" 
+     [leafletLayers]="layers"
+     (leafletMapReady)="onMapReady($event)">
+   
+   </div>
+  </div>
 </div>
+
+
