@@ -8,6 +8,47 @@
 
 <ion-content [fullscreen]="true">
   <div class="mt-1"></div>
+
+  <ion-card>  
+    <ion-card-content>
+      <ion-grid>
+        <h2>Filtro</h2>
+        <ion-row>
+          <ion-col>
+            <small>Data Inicial</small>
+            <ion-datetime-button datetime="datetime"></ion-datetime-button>
+    
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime" presentation="date" [(ngModel)]="startDate" max="{{endDate}}"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-col>
+          <ion-col>
+            <small>Data Final</small>
+            <ion-datetime-button datetime="datetime2"></ion-datetime-button>
+           
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime2" presentation="date" max="{{maxDate}}" [(ngModel)]="endDate"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-col>
+    
+        </ion-row>
+        <ion-button expand="block" (click)="applyFilter()">Aplicar</ion-button>
+      </ion-grid>
+    </ion-card-content>
+
+  </ion-card>
+ 
+
+
+
+
+
+
+  <div class="mt-1"></div>
   <app-total-casos  [total_cases]="totalCases"></app-total-casos>
   <div class="mt-1"></div>
   <app-mapa-paraiba *ngIf="listCasesByCity" [listCases]="listCasesByCity" class="map-position"></app-mapa-paraiba>
