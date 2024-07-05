@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="cancel()">Cancelar</ion-button>
+    </ion-buttons>
+    <ion-title>Cadastrar Alerta</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="alertForm">
+  <ion-item>
+    <ion-input label="Nome" formControlName="name" placeholder="Seu Nome"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input type="email" label="Email" formControlName="email" placeholder="email@domain.com"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input type="number" label="Quantidade minima de casos" formControlName="minCases"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-select label="Cidade" placeholder="Selecione a cidade" formControlName="geocode">
+      <ion-select-option *ngFor="let city of listCities" value="{{city.id}}">{{city.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-select label="Frequência" placeholder="Selecione a frequência" formControlName="frequency">
+      <ion-select-option value="weekly">Semanal</ion-select-option>
+      <ion-select-option value="monthly">Mensal</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-button expand="block" [disabled]="alertForm.invalid" (click)="save()">Salvar</ion-button> 
+  </form>
+</ion-content>

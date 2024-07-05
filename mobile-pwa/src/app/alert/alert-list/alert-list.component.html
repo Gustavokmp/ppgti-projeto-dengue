@@ -1,0 +1,17 @@
+<ion-list>
+  <ion-item *ngFor="let alert of alerts">
+    <ion-label>
+      <h2>{{ alert.cityname }}</h2>
+      <p>Minima de casos: {{ alert.minCases }}</p>
+      <p>Frequência: {{ getFrequencyLabel(alert.frequency)}}</p>
+    </ion-label>
+    <ion-buttons slot="end">
+      <ion-button (click)="editAlert(alert)">
+        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+      </ion-button>
+      <ion-button color="danger" (click)="removeAlert(alert)">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+</ion-list>

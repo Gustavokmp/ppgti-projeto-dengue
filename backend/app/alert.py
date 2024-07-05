@@ -4,12 +4,11 @@ from app import db
 
 
 class Alert:
-    def __init__(self, name, email, geocode, startDate, endDate, minCases):
+    def __init__(self, name, email, geocode, frequency, minCases):
         self.name = name
         self.email = email
         self.geocode = geocode
-        self.startDate = startDate
-        self.endDate = endDate
+        self.frequency = frequency
         self.minCases = minCases
 
     def to_dict(self):
@@ -17,8 +16,7 @@ class Alert:
             "name":self.name,
             "email": self.email,
             "geocode": self.geocode,
-            "startDate": self.startDate,
-            "endDate": self.endDate,
+            "frequency": self.frequency,
             "minCases": self.minCases
         }
 
@@ -27,7 +25,7 @@ class Alert:
         if not isinstance(alert_data, dict):
             return jsonify({"error": "Alert data must be a dictionary"}), 400
 
-        if not all(key in alert_data for key in ['email', 'startDate', 'endDate', 'minCases']):
+        if not all(key in alert_data for key in ['email', 'frequency', 'minCases']):
             return jsonify({"error": "Missing required fields in alert data"}), 400
 
         result = db.Alert.insert_one(alert_data)
@@ -71,8 +69,7 @@ class Alert:
                 "name":alert["name"] ,
                 "email": alert["email"],
                 "geocode": alert["geocode"],
-                "startDate": alert["startDate"],
-                "endDate": alert["endDate"],
+                "frequency": alert["frequency"],
                 "minCases": alert["minCases"]
             }
             serialized_alerts.append(alert_data)
