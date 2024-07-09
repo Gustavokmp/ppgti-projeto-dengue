@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package*.json ./
 RUN npm install -g @ionic/cli
-RUN npm install
+RUN npm install --force --legacy-peer-deps
 
 COPY . .
 
